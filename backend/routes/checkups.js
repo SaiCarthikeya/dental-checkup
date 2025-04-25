@@ -1,7 +1,9 @@
 const express = require('express');
 const multer = require('multer');
 const Checkup = require('../models/Checkup');
+// const Checkup = require('../models/Dentist');
 const auth = require('../middleware/auth');
+const Dentist = require('../models/Dentist');
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -29,6 +31,12 @@ router.get('/user', auth('user'), async (req, res) => {
 
 router.get('/dentist', auth('dentist'), async (req, res) => {
   const checkups = await Checkup.find({ dentistId: req.user.id }).populate('userId');
+  res.json(checkups);
+});
+
+router.get('/dentists', auth('user'), async (req, res) => {
+  const checkups = await Dentist.find({ })
+  // console.log(checkups)
   res.json(checkups);
 });
 
